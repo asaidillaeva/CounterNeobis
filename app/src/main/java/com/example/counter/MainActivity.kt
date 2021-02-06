@@ -1,9 +1,9 @@
 package com.example.counter
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
 
     fun onCountClicked(view: View) {
         counter++
-        when(counter.toString().length){
+        when (counter.toString().length) {
             1 -> result = "000$counter"
             2 -> result = "00$counter"
             3 -> result = "0$counter"
@@ -27,4 +27,20 @@ class MainActivity : AppCompatActivity() {
         }
         counterTextView!!.text = result
     }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString("result", result)
+        outState.putInt("counter", counter)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+
+        result = savedInstanceState.getString("result").toString()
+        counter = savedInstanceState.getInt("counter")
+
+        counterTextView!!.text = result
+    }
+
 }
